@@ -1,0 +1,49 @@
+<html lang="pt">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="chat-window">
+        <div id="output"></div>
+        <div id="typing"></div>
+    </div>
+    <div class="container" style="visibility: hidden;">
+        <input type="text" id="handle" class="form-control" placeholder="name" required autofocus>
+
+        <input type="text" id="message" class="form-control" placeholder="enter a message" required>
+
+        <button id="button" class="btn btn-lg btn-primary btn-block" type="submit">Send</button>
+    </div>
+
+    <hr>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6 col-lg-6">
+                remote
+                <video id="rVideo" autoplay="autplay"></video>
+            </div>
+            <div class="col-sm-6 col-lg-6">
+                local
+                <video id="lVideo" autoplay="autplay" muted></video>
+            </div>
+        </div>
+        <span id="displayId"></span>
+        <input type="text" id="connId" class="form-control" placeholder="enter a connID" required>
+        <button id="conn_button" class="btn btn-lg btn-success btn-block" type="submit">Conectar</button>
+        <button id="call_button" class="btn btn-lg btn-danger btn-block" type="submit">Chamar</button>
+    </div>
+
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/peerjs@0.3.20/dist/peer.min.js"></script>
+    <script src="/client.js"></script>
+</body>
+
+</html>
