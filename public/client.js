@@ -7,27 +7,6 @@ const button  = document.getElementById('button');
 const typing  = document.getElementById('typing');
 
 
-message.addEventListener('keypress', () =>{
-    socket.emit('userTyping', handle.value)
-})
-
-button.addEventListener('click', () =>{
-    socket.emit('userMessage', {
-        handle : handle.value,
-        message : message.value
-    })
-    document.getElementById('message').value="";
-})
-
-socket.on("userMessage", (data) => {
-    typing.innerHTML = "";
-    output.innerHTML += '<p> <strong>' + data.handle + ': </strong>' + data.message + '</p>'
-})
-
-socket.on('userTyping', (data) =>{
-    typing.innerHTML = '<p><em>'+ data + 'is typing ... </em></p>'
-})
-
 /* video chamada*/
 function getLVideo(callbacks) {
     navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
@@ -53,7 +32,7 @@ getLVideo({
     },
     error: function(err) 
     {
-        alert("cannot acess your camera");
+        alert("acesso negado a camera");
         console.log(err);
     }
 })
@@ -82,7 +61,7 @@ peer.on('error', function(err)
     console.log(err);
 })
 
-document.getElementById("conn_button").addEventListener('click', function() 
+/*document.getElementById("conn_button").addEventListener('click', function() 
 {
     peer_id = document.getElementById("connId").value;
     if (peer_id) 
@@ -95,13 +74,37 @@ document.getElementById("conn_button").addEventListener('click', function()
         return false;
     }  
 })
-
+*/
 peer.on('call', function (call) 
 {
     var acceptCall = confirm("voce aceita essa chamada de video ?");
     
     if(acceptCall)
     {
+        document.getElementById('chat').style.visibility = 'none';
+        document.getElementById('chat-window').style.visibility = 'none';
+
+        message.addEventListener('keypress', () =>{
+            socket.emit('userTyping', handle.value)
+        })
+        
+        button.addEventListener('click', () =>{
+            socket.emit('userMessage', {
+                handle : handle.value,
+                message : message.value
+            })
+            document.getElementById('message').value="";
+        })
+        
+        socket.on("userMessage", (data) => {
+            typing.innerHTML = "";
+            output.innerHTML += '<p> <strong>' + data.handle + ': </strong>' + data.message + '</p>'
+        })
+        
+        socket.on('userTyping', (data) =>{
+            typing.innerHTML = '<p><em>'+ data + 'está digitando ... </em></p>'
+        })
+
         call.answer(localstream);
 
         call.on('stream', function(stream) 
@@ -123,6 +126,17 @@ peer.on('call', function (call)
 
 document.getElementById('call_button').addEventListener('click', function() 
 {
+    peer_id = document.getElementById("connId").value;
+    if (peer_id) 
+    {
+        conn = peer.connect(peer_id);
+    }
+    else
+    {
+        alert('coloque um id válido');
+        return false;
+    }
+
     console.log("chamando o peer : " + peer_id);
     console.log(peer);
     var call = peer.call(peer_id, window.localstream);
