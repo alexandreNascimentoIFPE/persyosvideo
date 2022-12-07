@@ -21,7 +21,7 @@
   },
   "homepage": "https://github.com/alexandreNascimentoIFPE/persyosvideo#readme",
   "dependencies": {
-    "express": "^4.17.1",
+    "express": "^4.18.2",
     "peer": "^0.5.2",
     "peerjs": "^1.2.0",
     "socket.io": "^2.3.0"
